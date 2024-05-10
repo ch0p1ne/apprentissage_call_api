@@ -170,7 +170,8 @@ class _UsersPageState extends State<UsersPage> {
               ),
             ),
             Expanded(
-              child: ListView.builder(
+              child: ListView.separated(
+                separatorBuilder: (context, index) => Divider(height: 20, color: Colors.amber,),
                 padding: EdgeInsets.only(left: 15, right: 15),
                   controller: scrollController,
                   itemCount: (data == null)? 0 : items.length,
