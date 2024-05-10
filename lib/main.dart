@@ -1,21 +1,19 @@
 
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:apprentissage_call_api/pages/repository_home.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Home page',
       home: HomePage(),
@@ -29,19 +27,19 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(),
+      appBar: const MyAppBar(),
       body: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Click icon to go user pages'),
+            const Text('Click icon to go user pages'),
             IconButton(
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return UsersPage();
+                    return const UsersPage();
                   }));
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.face,
                   color: Colors.green,
                   size: 35,
@@ -54,13 +52,15 @@ class HomePage extends StatelessWidget {
 }
 
 class UsersPage extends StatefulWidget {
+  const UsersPage({super.key});
+
   @override
   State<UsersPage> createState() => _UsersPageState();
 }
 
 class _UsersPageState extends State<UsersPage> {
 
-  Icon currentIconForPass = Icon(Icons.visibility);
+  Icon currentIconForPass = const Icon(Icons.visibility);
   bool showPass = true;
   String query = "";
   dynamic data;
@@ -94,7 +94,7 @@ class _UsersPageState extends State<UsersPage> {
         appBar: AppBar(
           backgroundColor: Colors.blue,
           title: Text(
-            'AppBar : ${query} : ${currentPage} / ${totalPages}',
+            'AppBar : $query : $currentPage / $totalPages',
           ),
           centerTitle: true,
         ),
@@ -102,14 +102,14 @@ class _UsersPageState extends State<UsersPage> {
           children: [
             Container(
               height: 50,
-              margin: EdgeInsets.only(top: 25),
+              margin: const EdgeInsets.only(top: 25),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
                       child: Container(
                     height: 40,
-                    margin: EdgeInsets.only(left: 30, right: 45),
+                    margin: const EdgeInsets.only(left: 30, right: 45),
                     child: TextField(
                       obscureText: !showPass,
                       onChanged: (text){
@@ -123,21 +123,21 @@ class _UsersPageState extends State<UsersPage> {
                                setState(() {
                                  // alternativly algorithm : showPass = !showPass  AND   Icon( showPass ? Icons.Visibility : Icons.Visibility_off);
                                  if(showPass) {
-                                   this.currentIconForPass = Icon(Icons.visibility_off);
-                                   this.showPass = false;
+                                   currentIconForPass = const Icon(Icons.visibility_off);
+                                   showPass = false;
                                  }
                                  else {
-                                   this.currentIconForPass = Icon(Icons.visibility);
-                                    this.showPass = true;
+                                   currentIconForPass = const Icon(Icons.visibility);
+                                    showPass = true;
                                  }
 
                                });
                               },
-                              icon: this.currentIconForPass,
+                              icon: currentIconForPass,
                           ),
                           hintText: 'Nom utilisateur',
-                          contentPadding: EdgeInsets.all(10),
-                          border: OutlineInputBorder(
+                          contentPadding: const EdgeInsets.all(10),
+                          border: const OutlineInputBorder(
                               borderSide:
                                   BorderSide(width: 1, color: Colors.black),
                               borderRadius:
@@ -147,23 +147,23 @@ class _UsersPageState extends State<UsersPage> {
                   Container(
                       // search button
                       height: 40,
-                      margin: EdgeInsets.only(right: 20),
-                      decoration: BoxDecoration(),
+                      margin: const EdgeInsets.only(right: 20),
+                      decoration: const BoxDecoration(),
                       child: ElevatedButton(
                         onPressed: () {
                           setState(() {
                             items = [];
                             currentPage = 0;
-                            this.query = queryTEContoller.text;
+                            query = queryTEContoller.text;
                             _search(query);
                           });
                         },
                         style: ElevatedButton.styleFrom(
-                            shape: CircleBorder(),
+                            shape: const CircleBorder(),
                             backgroundColor: Colors.amber,
                             foregroundColor: Colors.white,
                             padding: const EdgeInsets.all(5)),
-                        child: Icon(
+                        child: const Icon(
                           Icons.search,
                           size: 25,
                         ),
@@ -173,8 +173,8 @@ class _UsersPageState extends State<UsersPage> {
             ),
             Expanded(
               child: ListView.separated(
-                separatorBuilder: (context, index) => Divider(height: 20, color: Colors.amber,),
-                padding: EdgeInsets.only(left: 15, right: 15),
+                separatorBuilder: (context, index) => const Divider(height: 20, color: Colors.amber,),
+                padding: const EdgeInsets.only(left: 15, right: 15),
                   controller: scrollController,
                   itemCount: (data == null)? 0 : items.length,
                   itemBuilder: (context, index) {
@@ -196,7 +196,7 @@ class _UsersPageState extends State<UsersPage> {
                                 backgroundImage: NetworkImage(items[index]['avatar_url']),
                                 radius: 25,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 30,
                               ),
                               Text('${items[index]['login']}')
@@ -242,14 +242,15 @@ class _UsersPageState extends State<UsersPage> {
 }
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
-  Size get preferredSize => new Size.fromHeight(50);
+  @override
+  Size get preferredSize => const Size.fromHeight(50);
   const MyAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.blue,
-      title: Text(
+      title: const Text(
         'AppBar',
       ),
       centerTitle: true,
